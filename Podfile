@@ -3,10 +3,13 @@
 
 target 'github-repo-starring-swift' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
+  source 'https://github.com/CocoaPods/Specs.git'
+  platform :ios, '10.0'
   use_frameworks!
+ 
 
   pod 'OHHTTPStubs'
-
+  pod 'Alamofire', '~> 4.0'
   # Pods for github-repo-starring-swift
 
   target 'github-repo-starring-swiftTests' do
@@ -15,6 +18,7 @@ target 'github-repo-starring-swift' do
     pod 'Quick'
     pod 'Nimble'
     pod 'KIF', '~> 3.0', :configurations => ['Debug']
+    
   end
 
   target 'github-repo-starring-swiftUITests' do

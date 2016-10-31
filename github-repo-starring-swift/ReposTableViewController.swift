@@ -23,6 +23,10 @@ class ReposTableViewController: UITableViewController {
                 self.tableView.reloadData()
             })
         }
+        
+        GithubAPIClient.checkStarred(with: "apple/swift") { succes in
+            print("WE good")
+        }
     }
 
     // MARK: - Table view data source
