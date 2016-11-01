@@ -95,11 +95,11 @@ class GithubAPIClient {
         
         var request = URLRequest(url: unwrappedURL)
         
-        request.addValue("0", forHTTPHeaderField: "Content-Length")
+        //request.addValue("0", forHTTPHeaderField: "Content-Length")
         request.httpMethod = "PUT"
         
-        let session = URLSession(configuration: URLSessionConfiguration.default)
-        let task = session.dataTask(with: unwrappedURL) { (data, response, error) in
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
             let httpResponse = response as! HTTPURLResponse
             
             var starred = false

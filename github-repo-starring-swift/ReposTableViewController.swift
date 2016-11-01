@@ -20,7 +20,6 @@ class ReposTableViewController: UITableViewController {
         
         store.getRepositories{
             DispatchQueue.main.async{
-                print(5)
                 self.tableView.reloadData()
                 print(self.store.repositories.count)
             }
@@ -44,17 +43,30 @@ class ReposTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedRepo = store.repositories[indexPath.row].fullName
-        let alertController = UIAlertController()
-        ReposDataStore.toggleStar(for: selectedRepo) { (starred) in
-            if starred == true {
-                alertController.message = "You just starred \(selectedRepo)"
-                alertController.accessibilityLabel = "You just starred \(selectedRepo)"
+        
+        print("Did select row: \(indexPath.row)")
+        
+        let selectedRepo = store.repositories[indexPath.row]
+        let fullName = selectedRepo.fullName
+        
+        print("Full name of repo is \(fullName)")
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        ReposDataStore.toggleStar(for: fullName) { starred in
+            if starred {
+                alertController.message = "You just starred \(fullName)"
+                alertController.accessibilityLabel = "You just starred \(fullName)"
+                self.present(alertController, animated: true, completion: nil)
+                let defaultAction = UIAlertAction(title: "Close", style: .default , handler: nil)
+                alertController.addAction(defaultAction)
                 
-            }
-            else {
-                alertController.message = "You just unstarred \(selectedRepo)"
-                alertController.accessibilityLabel = "You just unstarred \(selectedRepo)"
+            } else {
+                alertController.message = "You just unstarred \(fullName)"
+                alertController.accessibilityLabel = "You just unstarred \(fullName)"
+                self.present(alertController, animated: true, completion: nil)
+                let defaultAction = UIAlertAction(title: "Close", style: .default , handler: nil)
+                alertController.addAction(defaultAction)
             }
         }
     }
