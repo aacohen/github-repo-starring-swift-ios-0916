@@ -11,6 +11,7 @@ import Nimble
 import OHHTTPStubs
 
 @testable import github_repo_starring_swift
+
 class ReposDataStoreSpec: QuickSpec {
     
     override func spec() {
@@ -29,7 +30,7 @@ class ReposDataStoreSpec: QuickSpec {
                 let store = ReposDataStore.sharedInstance
                 
                 waitUntil(action: { (done) in
-                    store.getRepositoriesWithCompletion {
+                    store.getRepositories {
                         expect(store.repositories.count).to(equal(2))
                         
                         let repo1 = store.repositories[0]

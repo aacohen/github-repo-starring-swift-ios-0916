@@ -18,14 +18,12 @@ class ReposTableViewController: UITableViewController {
         self.tableView.accessibilityLabel = "tableView"
         self.tableView.accessibilityIdentifier = "tableView"
         
-        store.getRepositoriesWithCompletion {
-            OperationQueue.main.addOperation({ 
+        store.getRepositories{
+            DispatchQueue.main.async{
+                print(5)
                 self.tableView.reloadData()
-            })
-        }
-        
-        GithubAPIClient.checkStarred(with: "apple/swift") { succes in
-            print("WE good")
+                print(self.store.repositories.count)
+            }
         }
     }
 
@@ -43,6 +41,22 @@ class ReposTableViewController: UITableViewController {
         cell.textLabel?.text = repository.fullName
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRepo = store.repositories[indexPath.row].fullName
+        let alertController = UIAlertController()
+        ReposDataStore.toggleStar(for: selectedRepo) { (starred) in
+            if starred == true {
+                alertController.message = "You just starred \(selectedRepo)"
+                alertController.accessibilityLabel = "You just starred \(selectedRepo)"
+                
+            }
+            else {
+                alertController.message = "You just unstarred \(selectedRepo)"
+                alertController.accessibilityLabel = "You just unstarred \(selectedRepo)"
+            }
+        }
     }
 
 }
